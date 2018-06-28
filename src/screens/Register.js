@@ -29,8 +29,8 @@ export default class Register extends Component {
                             secureTextEntry={true}
                             onChangeText={password => this.setState({ password })} />
                         <Button title='Register User'
-                            onPress={() => Alert.alert(`Email: ${this.state.email}\nPassword: ${this.state.password}`)} /> />
-                </View>
+                            onPress={() => Alert.alert(`Email: ${this.state.email}\nPassword: ${this.state.password}`)} />
+                    </View>
                 </KeyboardAvoidingView>
             </SafeAreaView>
         );
