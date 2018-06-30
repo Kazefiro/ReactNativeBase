@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, KeyboardAvoidingView, View, Image, Text, TextInput, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, KeyboardAvoidingView, View, Image, Text, TextInput, Button, Alert } from 'react-native';
+import { createUserOnFirebaseAsync } from '../services/FirebaseApi';
+import { NavigationActions } from 'react-navigation';
 
 const img = require('../assets/TodoList.png');
 
-export default class Register extends Component {
+export default class n extends Component {
+
+    static navigationOptions = {
+        title: 'Register'
+    }
 
     constructor(props) {
         super(props);
@@ -29,11 +35,33 @@ export default class Register extends Component {
                             secureTextEntry={true}
                             onChangeText={password => this.setState({ password })} />
                         <Button title='Register User'
-                            onPress={() => Alert.alert(`Email: ${this.state.email}\nPassword: ${this.state.password}`)} />
+                            onPress={async () => await this.createUserAsync()} />
                     </View>
                 </KeyboardAvoidingView>
             </SafeAreaView>
         );
+    }
+
+    async createUserAsync() {
+        try {
+            const user = await createUserOnFirebaseAsync(
+                this.state.email,
+                this.state.password
+            );
+            const message = `User ${user.email} has been created!`;
+            Alert.alert('User Created', message,
+                [
+                    {
+                        text: 'Ok', onPress: () => {
+                            // const backAction = NavigationActions.back();
+                            // this.props.navigation.dispatch(backAction);
+                            this.props.navigation.goBack();
+                        }
+                    }
+                ]);
+        } catch (error) {
+            Alert.alert('Create User Failed', error.message);
+        }
     }
 
 }
