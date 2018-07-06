@@ -1,11 +1,30 @@
-import { StackNavigator } from 'react-navigation';
-import Login from '../screens/Login';
-import Register from '../screens/Register';
+import { Platform } from 'react-native';
+import { createStackNavigator, createTabNavigator } from 'react-navigation';
+import { App, Login, Register, ToDoTasks, DoneTasks } from '../screens/Screens';
 
-export const Routes = StackNavigator(
+export const tabTasksNavigator = createTabNavigator({
+    tabToDoTasks: { screen: ToDoTasks, title: 'To Do' },
+    tabDoneTasks: { screen: DoneTasks, title: 'Done' }
+});
+
+export const Routes = createStackNavigator(
     {
-        Login: { screen: Login },
-        pageRegister: { screen: Register }
+        pageApp: { screen: App },
+        pageLogin: { screen: Login },
+        pageRegister: { screen: Register },
+        pageTaskList: {
+            screen: tabTasksNavigator,
+            navigationOptions: {
+                ...Platform.select({
+                    ios: {
+                        title: 'Task List'
+                    },
+                    android: {
+                        header: null
+                    }
+                })
+            }
+        }
     },
     {
         headerMode: 'screen'

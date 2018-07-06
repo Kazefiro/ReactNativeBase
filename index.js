@@ -1,12 +1,19 @@
-import { AppRegistry } from 'react-native';
-//import Login from './src/screens/Login';
-//import Register from './src/screens/Register';
+import React from 'react';
+import { AppRegistry, SafeAreaView } from 'react-native';
 import { Routes } from './src/routes/Routes';
 import { initializeFirebaseApi } from './src/services/FirebaseApi';
+
+console.disableYellowBox = true;
+
+const wrappedRoutes = () => (
+    <SafeAreaView style={{ flex: 1 }}>
+        <Routes />
+    </SafeAreaView>
+);
 
 AppRegistry
     .registerComponent('ToDoManager_TurmaA_2017',
         () => {
             initializeFirebaseApi();
-            return Routes;
+            return wrappedRoutes;
         });

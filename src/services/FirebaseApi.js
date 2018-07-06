@@ -13,6 +13,20 @@ export const initializeFirebaseApi = () => {
     return firebase.initializeApp(config);
 }
 
+export const currentFirebaseUser = () => {
+    return new Promise((resolve, reject) => {
+        var unsubscribe = null;
+        unsubscribe = firebase.auth()
+            .onAuthStateChanged((user) => {
+                resolve(user);
+            }, (error) => {
+                reject(error);
+            }, () => {
+                unsubscribe();
+            });
+    });
+}
+
 export const createUserOnFirebaseAsync = async (email, password) => {
     const { user } = await firebase
         .auth()
