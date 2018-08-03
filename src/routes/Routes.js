@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import { createStackNavigator, createTabNavigator } from 'react-navigation';
-import { App, Login, Register, ToDoTasks, DoneTasks } from '../screens/Screens';
+import { App, Login, Register, ToDoTasks, DoneTasks, Task } from '../screens/Screens';
 
 export const tabTasksNavigator = createTabNavigator({
     tabToDoTasks: { screen: ToDoTasks, title: 'To Do' },
@@ -24,7 +24,8 @@ export const Routes = createStackNavigator(
                     }
                 })
             }
-        }
+        },
+        pageTask: { screen: Task }
     },
     {
         headerMode: 'screen'

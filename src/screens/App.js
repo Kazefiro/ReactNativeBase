@@ -17,47 +17,47 @@ export default class App extends Component {
         );
     }
 
-    componentDidMount() {
-        let resetNavigation = StackActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'pageLogin' })]
-        });
-
-        currentFirebaseUser()
-            .then((user) => {
-                if (user) {
-                    resetNavigation = StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'pageTaskList' })]
-                    });
-                    this.props.navigation.dispatch(resetNavigation);
-                }
-            })
-            .catch((error) => {
-                this.props.navigation.dispatch(resetNavigation);
-            });
-    }
-
-    // async componentDidMount() {
+    // componentDidMount() {
     //     let resetNavigation = StackActions.reset({
     //         index: 0,
     //         actions: [NavigationActions.navigate({ routeName: 'pageLogin' })]
     //     });
 
-    //     try {
-    //         const user = await currentFirebaseUser();
-    //         if (user) {
-    //             resetNavigation = StackActions.reset({
-    //                 index: 0,
-    //                 actions: [NavigationActions.navigate({ routeName: 'pageTaskList' })]
-    //             });
-    //         }
-    //     } catch (error) {
-    //         Console.log(error);
-    //     } finally {
-    //         this.props.navigation.dispatch(resetNavigation);
-    //     }
+    //     currentFirebaseUser()
+    //         .then((user) => {
+    //             if (user) {
+    //                 resetNavigation = StackActions.reset({
+    //                     index: 0,
+    //                     actions: [NavigationActions.navigate({ routeName: 'pageTaskList' })]
+    //                 });
+    //                 this.props.navigation.dispatch(resetNavigation);
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             this.props.navigation.dispatch(resetNavigation);
+    //         });
     // }
+
+    async componentDidMount() {
+        let resetNavigation = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'pageLogin' })]
+        });
+
+        try {
+            const user = await currentFirebaseUser();
+            if (user) {
+                resetNavigation = StackActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({ routeName: 'pageTaskList' })]
+                });
+            }
+        } catch (error) {
+            Console.log(error);
+        } finally {
+            this.props.navigation.dispatch(resetNavigation);
+        }
+    }
 }
 
 const styles = StyleSheet.create({
